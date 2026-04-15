@@ -6,14 +6,20 @@ from eventforge.utils.logging import get_logger, setup_logging
 setup_logging()
 logger = get_logger(__name__)
 
+
 async def main():
     graph = build_graph()
 
+    # 🔥 TAKE USER INPUT
+    category = input("Enter conference category: ")
+    geography = input("Enter geography: ")
+    audience_size = int(input("Enter audience size: "))
+
     state = {
         "input": {
-            "category": "AI",
-            "geography": "India",
-            "audience_size": 3000
+            "category": category,
+            "geography": geography,
+            "audience_size": audience_size
         },
         "outputs": {},
         "agent_meta": {},
@@ -23,20 +29,18 @@ async def main():
     }
 
     logger.info("Starting EventForge pipeline...")
+
+    # 🔥 STREAM (optional but nice)
+    async for chunk in graph.astream(state):
+        logger.debug(f"Update: {chunk}")
+
     result = await graph.ainvoke(state)
+
     logger.info("Graph execution completed")
 
-    logger.debug(f"Final state: {result}")
-    
-    if "sponsor_agent" in result["outputs"]:
-        logger.info("Sponsor agent output generated successfully")
-        logger.debug(result["outputs"]["sponsor_agent"])
-    else:
-        logger.error("Sponsor agent output missing")
-        logger.error(f"Errors: {result['errors']}")
-        
-    print(result["outputs"]["sponsor_agent"])
-    print(result["outputs"]["sponsor_agent"])
+    print("\n=== FINAL OUTPUT ===\n")
+    print(result["outputs"]["final_agent"])
+
 
 if __name__ == "__main__":
     asyncio.run(main())
