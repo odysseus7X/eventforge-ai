@@ -1,4 +1,4 @@
-from backend.state import ConferenceState
+from eventforge.models.state import ConferenceState
 
 async def run_gtm_agent(state: ConferenceState) -> dict:
     """
