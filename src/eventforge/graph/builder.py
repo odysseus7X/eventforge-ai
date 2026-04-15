@@ -25,7 +25,7 @@ def build_graph():
     graph.add_node("speaker_agent", speaker.run)
     graph.add_node("venue_agent", venue.run)
     graph.add_node("pricing_agent", pricing.run)
-    graph.add_node("join", join_node)
+    # graph.add_node("join", join_node)
     graph.add_node("final_agent", final.run)
 
     # ---- parallel start ----
@@ -35,14 +35,20 @@ def build_graph():
     
     # ---- dependency ----
     graph.add_edge("venue_agent", "pricing_agent")
+
+    graph.add_edge(
+        ["sponsor_agent", "speaker_agent", "pricing_agent"],
+        "final_agent"
+    )
+    
     
     # ---- convergence ----
-    graph.add_edge("sponsor_agent", "join")
-    graph.add_edge("speaker_agent", "join")
-    graph.add_edge("venue_agent", "join")
-    graph.add_edge("pricing_agent", "join")
+    # graph.add_edge("sponsor_agent", "join")
+    # graph.add_edge("speaker_agent", "join")
+    # graph.add_edge("venue_agent", "join")
+    # graph.add_edge("pricing_agent", "join")
 
-    graph.add_edge("join", "final_agent")
+    # graph.add_edge("join", "final_agent")
 
     # ---- End ----
     graph.add_edge("final_agent", END)
