@@ -58,11 +58,10 @@ class SpeakerAgentOutput(BaseModel):
 class Venue(BaseModel):
     id: str
     name: str
-    city: str
+    geography: str
     capacity: int
-    price_per_day_usd: int
-    notes: str
-
+    price_per_day: float
+    score: float
 
 class VenueAgentOutput(BaseModel):
     venues: List[Venue]

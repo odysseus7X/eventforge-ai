@@ -1,12 +1,9 @@
 from typing import Dict, Any
-
-from langchain_core.prompts import ChatPromptTemplate
+import pandas as pd
 
 from eventforge.agents.base.base_agent import BaseAgent
+from eventforge.models.schemas import ConferenceInput, VenueAgentOutput, Venue
 from eventforge.utils.logging import get_logger
-from eventforge.models.schemas import ConferenceInput, VenueAgentOutput
-from eventforge.utils.llm_client import get_llm
-from eventforge.tools.web_search import search_venues
 
 logger = get_logger(__name__)
 
@@ -16,34 +13,8 @@ class VenueAgent(BaseAgent):
     def __init__(self):
         super().__init__("venue_agent")
 
-        self.llm = get_llm().with_structured_output(
-            VenueAgentOutput, method="json_schema", strict=True
-        )
-
-        self.prompt = ChatPromptTemplate.from_messages(
-            [
-                ("system", "You are an expert event planner. Select suitable venues."),
-                (
-                    "user",
-                    """
-            Conference Details:
-            Category: {category}
-            Geography: {geography}
-            Audience Size: {audience_size}
-
-            Search Results:
-            {search_results}
-
-            TASK:
-            - Select top 3 venues
-            - Assign UNIQUE id
-            - Ensure capacity >= audience size
-            - Provide price per day estimate
-            - Add notes
-            """,
-                ),
-            ]
-        )
+        # load dataset once
+        self.venues_df = pd.read_csv("data/venues.csv", sep="\t")
 
     async def run(self, state: Dict[str, Any]) -> Dict[str, Any]:
         try:
@@ -51,22 +22,49 @@ class VenueAgent(BaseAgent):
 
             input_data = ConferenceInput(**state["input"])
 
-            query = f"{input_data.category} conference venues in {input_data.geography}"
-            search_results = await search_venues.ainvoke(query)
+            df = self.venues_df.copy()
 
-            chain = self.prompt | self.llm
+            # ---- FILTER BY GEOGRAPHY ----
+            df = df[df["country"].str.lower() == input_data.geography.lower()]
 
-            result = await chain.ainvoke(
-                {
-                    "category": input_data.category,
-                    "geography": input_data.geography,
-                    "audience_size": input_data.audience_size,
-                    "search_results": search_results,
-                }
-            )
+            # fallback if empty
+            if df.empty:
+                df = self.venues_df.copy()
+
+            # ---- SCORE VENUES ----
+            def score(row):
+                capacity_score = min(row["capacity"] / input_data.audience_size, 1.5)
+                price_score = 1 / (row["price_per_day"] + 1)
+                return 0.7 * capacity_score + 0.3 * price_score
+
+            df["score"] = df.apply(score, axis=1)
+
+            # ---- SORT ----
+            df = df.sort_values(by="score", ascending=False).head(5)
+
+            # ---- FORMAT OUTPUT ----
+            venues = [
+                Venue(
+                    id=row["id"],
+                    name=row["name"],
+                    city=row["city"],
+                    country=row["country"],
+                    capacity=int(row["capacity"]),
+                    price_per_day=float(row["price_per_day"]),
+                    score=float(row["score"]),
+                )
+                for _, row in df.iterrows()
+            ]
+
+            result = VenueAgentOutput(venues=venues)
+
+            logger.info("VenueAgent completed successfully")
 
             return self._success(result)
 
         except Exception as e:
+            import traceback
+            traceback.print_exc() 
             logger.exception("VenueAgent failed")
             return self._fail(e)
+        

@@ -47,13 +47,16 @@
 #     - HITEX Hyderabad (tech conferences)
 #     """
 
-
+from dotenv import load_dotenv
 from langchain_core.tools import tool
 from tavily import TavilyClient
 import os
 import asyncio
 
-client = TavilyClient(api_key=os.environ["TAVILY_API_KEY"])
+
+load_dotenv()
+
+client = TavilyClient(api_key="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")
 
 
 async def _search(query: str, max_results: int = 5) -> str:

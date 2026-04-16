@@ -20,9 +20,9 @@ load_dotenv()
 
 def get_llm() -> ChatOpenAI:
     return ChatOpenAI(
-        model=os.environ["LLM_MODEL"],
-        api_key=os.environ["LLM_API_KEY"],
-        base_url=os.getenv("LLM_BASE_URL") or None,
+        model="openai/gpt-4o-mini",
+        api_key="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",
+        base_url="https://openrouter.ai/api/v1",
         temperature=0,
         streaming=False,
     )
