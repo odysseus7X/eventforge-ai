@@ -7,9 +7,8 @@ class ConferenceInput(BaseModel):
     category: str
     geography: str
     audience_size: int
-    budget_usd: Optional[int] = None
-    duration_days: int = 1
-
+    budget_constraint: float
+    duration_days: int
 
 # ── COMMON MIXINS ──────────────────────────────
 class ScoredItem(BaseModel):

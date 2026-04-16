@@ -115,7 +115,7 @@ async def search_speakers(query: str) -> str:
     """
     return await _search(f"{query} top speakers AI conference")
 
-
+'''
 @tool
 async def search_venues(query: str) -> str:
     """
@@ -128,3 +128,35 @@ async def search_venues(query: str) -> str:
         capacities, and key details.
     """
     return await _search(f"{query} large conference venues capacity")
+
+    '''
+# ─────────────────────────────────────────────
+# STRUCTURED VENUE SEARCH (FOR VenueAgent ONLY)
+# ─────────────────────────────────────────────
+async def search_venues_structured(query: str, max_results: int = 5):
+    """
+    Structured venue search for internal agent use (NOT a tool).
+    Returns list of dicts instead of string.
+    """
+    loop = asyncio.get_event_loop()
+
+    response = await loop.run_in_executor(
+        None,
+        lambda: client.search(
+            query=query,
+            max_results=max_results,
+            search_depth="advanced"
+        )
+    )
+
+    results = response.get("results", [])
+
+    structured = []
+    for r in results:
+        structured.append({
+            "name": r.get("title", ""),
+            "url": r.get("url", ""),
+            "snippet": r.get("content", "")
+        })
+
+    return structured

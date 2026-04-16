@@ -13,12 +13,16 @@ async def main():
     category = input("Enter conference category: ")
     geography = input("Enter geography: ")
     audience_size = int(input("Enter audience size: "))
+    budget_constraint = float(input("Enter budget: "))
+    duration_days = int(input("Enter duration in days: "))
 
     state = {
         "input": {
             "category": category,
             "geography": geography,
             "audience_size": audience_size,
+            "budget_constraint": budget_constraint,
+            "duration_days": duration_days
         },
         "outputs": {},
         "agent_meta": {},

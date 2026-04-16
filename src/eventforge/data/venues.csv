@@ -1,7 +1,11 @@
-id	name	city	country	capacity	price_per_day	category
-v1	Pragati Maidan	Delhi	India	10000	500000	tech
-v2	BIEC	Bangalore	India	8000	400000	tech
-v3	Jio World Centre	Mumbai	India	6000	450000	business
-v4	Expo Mart	Greater Noida	India	7000	350000	tech
-v5	Sands Expo	Singapore	Singapore	12000	900000	tech
-v6	Olympia London	London	UK	9000	800000	business
+id	name	city	country	capacity	price_per_day	max_budget	category
+v1	Pragati Maidan	Delhi	India	10000	500000	800000	tech
+v2	BIEC	Bangalore	India	8000	400000	700000	tech
+v3	Jio World Centre	Mumbai	India	6000	450000	900000	business
+v4	Expo Mart	Greater Noida	India	7000	350000	600000	tech
+v5	HITEX	Hyderabad	India	5000	300000	500000	tech
+v6	Chennai Trade Centre	Chennai	India	4000	250000	400000	business
+v7	Sands Expo	Singapore	Singapore	12000	900000	1500000	tech
+v8	Marina Bay Sands	Singapore	Singapore	8000	850000	1400000	business
+v9	Olympia London	London	UK	9000	800000	1200000	business
+v10	ExCeL London	London	UK	12000	950000	1500000	tech
