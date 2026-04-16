@@ -24,25 +24,56 @@ class GTMAgent(BaseAgent):
 
         self.prompt = ChatPromptTemplate.from_messages([
             ("system", 
-             "You are an expert in event marketing and growth strategy."),
-
+             "You are an expert in event marketing and growth strategy. "
+             "You specialize in launching conferences with high attendance using targeted community outreach."),
+        
             ("user", 
              """
             Conference Details:
             Category: {category}
             Geography: {geography}
-
+        
             Search Results:
             {search_results}
-
+        
             TASK:
-            - Identify top communities (Discord, LinkedIn, Meetup, etc.)
-            - Assign UNIQUE id
-            - Provide platform and niche
-            - Generate promotion message
-            - Assign recommended order (1 = highest priority)
-
-            Also provide a short GTM summary.
+            Identify the best communities to promote this conference.
+        
+            REQUIREMENTS:
+            - Select 4–6 HIGH-QUALITY communities
+            - Prefer REAL and ACTIVE communities (LinkedIn groups, Meetup groups, Twitter/X audiences, professional forums)
+            - Avoid fake or generic communities
+            - Ensure communities are relevant to BOTH:
+                - conference category
+                - geography (local/regional relevance preferred)
+        
+            For each community:
+            - Assign UNIQUE id (short, no spaces)
+            - Provide:
+                - community_name
+                - platform (LinkedIn / Meetup / Twitter / Discord / etc.)
+                - niche (what audience they represent)
+                - why this community is relevant (1 line reasoning)
+                - priority_order (1 = highest priority)
+        
+            PROMOTION STRATEGY:
+            - Generate a tailored promotion message for EACH community
+            - Message should:
+                - match the platform tone (LinkedIn = professional, Discord = casual, etc.)
+                - be concise (2-3 lines max)
+                - include a clear call-to-action
+        
+            CONSTRAINTS:
+            - Avoid unrealistic or global-only communities unless justified
+            - Prefer communities with strong engagement potential
+            - Ensure diversity across platforms (not all from same platform)
+        
+            OUTPUT:
+            - List of communities (ranked by priority_order)
+            - A short GTM summary including:
+                - rollout strategy (which communities to target first)
+                - reasoning behind prioritization
+                - expected impact
             """)
         ])
 

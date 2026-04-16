@@ -43,11 +43,12 @@ class ExhibitorAgent(BaseAgent):
             - Only include real companies
             - Avoid invalid or noisy names
 
-            STRICT RULES:
+            RULES:
             - Only include real companies or organizations
             - DO NOT generate random or unknown names
             - If unsure, skip the entry
             - Prefer companies mentioned in search results
+            - Avoid generic or unknown entities
             """)
         ])
 
