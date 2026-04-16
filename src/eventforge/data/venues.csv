@@ -1,0 +1,26 @@
+id,name,city,country,capacity,price_per_day_usd,category
+v1,Pragati Maidan,Delhi,India,10000,5000,tech
+v2,BIEC,Bangalore,India,8000,4000,tech
+v3,Jio World Centre,Mumbai,India,6000,4500,business
+v4,Expo Mart,Greater Noida,India,7000,3500,tech
+v5,HITEX,Hyderabad,India,5000,3000,tech
+v6,Chennai Trade Centre,Chennai,India,4000,2500,business
+v7,Sands Expo,Singapore,Singapore,12000,9000,tech
+v8,Marina Bay Sands,Singapore,Singapore,8000,8500,business
+v9,Olympia London,London,UK,9000,8000,business
+v10,ExCeL London,London,UK,12000,9500,tech
+v11,India Expo Centre,Greater Noida,India,9000,4200,tech
+v12,NESCO Exhibition Centre,Mumbai,India,7500,3800,tech
+v13,Karnataka Trade Promotion,Bangalore,India,6000,3600,business
+v14,Hyderabad International Convention Centre,Hyderabad,India,6500,4000,tech
+v15,Leela Ambience Convention Hotel,Delhi,India,2000,3000,business
+v16,Novotel Convention Centre,Hyderabad,India,3000,3200,business
+v17,Palais des Congrès,Paris,France,10000,10000,business
+v18,Paris Expo Porte de Versailles,Paris,France,15000,11000,tech
+v19,Las Vegas Convention Center,Las Vegas,USA,20000,12000,tech
+v20,Moscone Center,San Francisco,USA,18000,11500,tech
+v21,Jacob Javits Center,New York,USA,17000,11000,business
+v22,Dubai World Trade Centre,Dubai,UAE,14000,10000,tech
+v23,QSNCC,Bangkok,Thailand,10000,7000,business
+v24,Tokyo Big Sight,Tokyo,Japan,16000,13000,tech
+v25,ICC Sydney,Sydney,Australia,12000,9000,business

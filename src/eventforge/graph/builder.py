@@ -55,15 +55,6 @@ def build_graph():
         ["sponsor_agent", "pricing_agent", "ops_agent", "exhibitor_agent", "gtm_agent"],
         "final_agent",
     )
-
-    # ---- convergence ----
-    # graph.add_edge("sponsor_agent", "join")
-    # graph.add_edge("speaker_agent", "join")
-    # graph.add_edge("venue_agent", "join")
-    # graph.add_edge("pricing_agent", "join")
-
-    # graph.add_edge("join", "final_agent")
-
     # ---- End ----
     graph.add_edge("final_agent", END)
 
