@@ -40,6 +40,14 @@ class ExhibitorAgent(BaseAgent):
             - Assign UNIQUE id
             - Categorize each as: startup / enterprise / tools
             - Provide short description
+            - Only include real companies
+            - Avoid invalid or noisy names
+
+            STRICT RULES:
+            - Only include real companies or organizations
+            - DO NOT generate random or unknown names
+            - If unsure, skip the entry
+            - Prefer companies mentioned in search results
             """)
         ])
 

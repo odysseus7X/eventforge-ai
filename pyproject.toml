@@ -4,6 +4,25 @@ version = "0.1.0"
 description = "Multi-agent conference planner"
 requires-python = ">=3.10"
 
+dependencies = [
+    # LangGraph + LangChain stack
+    "langgraph>=0.2.0",
+    "langchain-core>=0.2.0",
+    "langchain-openai>=0.1.0",
+
+    # Search
+    "tavily-python>=0.3.0",
+
+    # Env + config
+    "python-dotenv>=1.0.0",
+
+    # Data models (used by LangChain + your schemas)
+    "pydantic>=2.6.0",
+
+    # UI
+    "streamlit>=1.33.0",
+]
+
 [tool.setuptools.packages.find]
 where = ["src"]
 

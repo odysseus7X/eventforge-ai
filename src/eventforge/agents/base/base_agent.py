@@ -37,3 +37,8 @@ class BaseAgent(ABC):
             "agent_meta": {self.name: {"status": "failed", "error": str(error)}},
             "errors": [f"{self.name}: {str(error)}"],
         }
+
+    def _ground(self, search_results: str, extra: str = ""):
+        "Return grounded context"
+        from eventforge.utils.grounding import build_grounded_context
+        return build_grounded_context(search_results, extra)

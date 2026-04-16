@@ -9,7 +9,7 @@ class ColorFormatter(logging.Formatter):
         logging.INFO: "\033[35m",
         logging.WARNING: "\033[93m",
         logging.ERROR: "\033[91m",
-        logging.CRITICAL: "\033[1;91m"
+        logging.CRITICAL: "\033[1;91m",
     }
 
     def format(self, record: logging.LogRecord) -> str:
@@ -19,12 +19,15 @@ class ColorFormatter(logging.Formatter):
 
         # THIS is key
         # location = f"{record.pathname}:{record.lineno}"
-        
-        
+
         filename = os.path.basename(record.pathname)
         location = f"{color}{filename}:{record.lineno}{self.RESET}"
 
         message = record.getMessage()
+
+        if record.exc_info:
+            exception_text = self.formatException(record.exc_info)
+            message = f"{message}\n{exception_text}"
 
         return f"[{levelname}] {location} | {message}"
 
