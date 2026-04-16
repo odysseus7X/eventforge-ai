@@ -1,19 +1,12 @@
-# EventForge AI
+# 🚀 EventForge AI
 
-EventForge is a multi-agent conference planning system built using **LangGraph**.  
-It decomposes conference organization into specialized AI agents that run in parallel and coordinate through a shared state.
+**EventForge AI** is a multi-agent AI system that automates and optimizes end-to-end event planning — from sponsors and speakers to venue selection and pricing.
 
 ---
 
-## 🚀 Overview
+## ✨ Overview
 
-Planning a large conference involves multiple independent but interconnected decisions — sponsors, speakers, venue, pricing, etc.
-
-EventForge models this as a **Directed Acyclic Graph (DAG)** of agents:
-- Each agent solves a specific subproblem
-- Agents run **asynchronously and in parallel**
-- Dependencies are explicitly modeled
-- Outputs are merged into a final structured plan
+Planning a conference involves multiple complex decisions across sponsorships, speakers, venues, and pricing. EventForge AI simplifies this by orchestrating **specialized AI agents** that collaborate to generate a complete, data-driven event plan in seconds.
 
 ---
 
@@ -49,68 +42,63 @@ EventForge models this as a **Directed Acyclic Graph (DAG)** of agents:
 ```
 ---
 
+## 🧠 Key Features
 
-### Execution Logic
+- 🤖 **Multi-Agent System**
+  - Sponsor Agent → Finds potential sponsors  
+  - Speaker Agent → Recommends speakers  
+  - Venue Agent → Suggests venues  
+  - Pricing Agent → Generates pricing tiers  
+  - Final Agent → Combines all outputs  
 
-- **Parallel stage**: Sponsor, Speaker, Venue  
-- **Dependent stage**: Pricing (requires venue)  
-- **Aggregation stage**: Final agent combines all outputs  
+- ⚡ Fast, automated decision-making  
+- 📊 Structured and explainable outputs  
+- 🔄 Modular and extensible design  
+
+---
+
+## ⚙️ How It Works
+
+1. User provides event details (type, budget, attendees, location)  
+2. Agents run in parallel to solve specific tasks  
+3. Outputs are aggregated into a final event plan  
+
+---
+
+## 📥 Input
+
+- Event type  
+- Expected attendees  
+- Budget constraints  
+- Location  
+- Preferences  
+
+---
+
+## 📤 Output
+
+A complete AI-generated event plan including:
+
+- 💰 Pricing strategy  
+- 🏟️ Venue recommendations  
+- 🎤 Speaker suggestions  
+- 🤝 Sponsorship opportunities  
+- 📄 Final consolidated report  
 
 ---
 
 ## ⚙️ Tech Stack
 
-- **LangGraph** → DAG orchestration  
-- **LangChain** → prompts, tools, chaining  
-- **Pydantic** → strict structured outputs  
-- **Async Python** → concurrency  
-- **LLM APIs** → reasoning + generation  
-- **Custom Tools** → web search integration  
+- Python  
+- LangChain / Agent frameworks  
+- Pydantic  
+- Async execution  
 
 ---
 
-## 🔧 System Components
+## 🚀 Getting Started
 
-### Agents
-
-| Agent | Responsibility |
-|------|--------|
-| SponsorAgent | Find & rank sponsors |
-| SpeakerAgent | Curate speakers |
-| VenueAgent | Select venues |
-| PricingAgent | Generate pricing tiers |
-| FinalAgent | Aggregate outputs |
-
----
-
-### State Management
-
-All agents interact through a shared state:
-
-- `input` → immutable user input  
-- `outputs` → agent outputs (merged)  
-- `agent_meta` → execution status  
-- `shared_memory` → optional intermediate storage  
-- `errors` → collected failures  
-
-LangGraph reducers handle merging safely across parallel nodes.
-
----
-
-### Tools
-
-Agents use tools for external grounding:
-
-- `search_sponsors`
-- `search_speakers`
-- `search_venues`
-
-These abstract web search and can be extended to real APIs (Tavily, SerpAPI, etc.)
-
----
-
-## ▶️ Running the Project
-
+### 1. Clone the repository
 ```bash
-pip install -e .
-python src/eventforge/app.py
+git clone <repo-url>
+cd eventforge-ai
