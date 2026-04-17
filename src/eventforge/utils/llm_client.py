@@ -1,31 +1,48 @@
-"""
-LLM client factory.
-
-All configuration via environment variables — switch providers by changing .env only.
-Uses the OpenAI-compatible API format, which all major providers support.
-
-Supported providers (set LLM_BASE_URL accordingly):
-  - OpenRouter   → https://openrouter.ai/api/v1
-  - Mistral      → https://api.mistral.ai/v1
-  - Groq         → https://api.groq.com/openai/v1
-  - Google (via OpenRouter, recommended over direct Gemini API)
-  - OpenAI       → leave LLM_BASE_URL unset
-  - Ollama       → http://localhost:11434/v1
-"""
-
 import os
-from langchain_openai import ChatOpenAI
-from dotenv import load_dotenv
 from pathlib import Path
 
+from langchain_openai import ChatOpenAI
+from dotenv import load_dotenv
+
+# Load .env ONLY for local development
 load_dotenv()
 
 
+def _get_env(key: str) -> str:
+    """
+    Unified env loader:
+    Priority:
+    1. OS environment variables
+    2. Streamlit secrets (if running in Streamlit)
+    """
+
+    # 1. Standard env (local + Streamlit runtime)
+    val = os.getenv(key)
+    if val:
+        return val
+
+    # 2. Streamlit secrets (only available in deployed app)
+    try:
+        import streamlit as st
+        if key in st.secrets:
+            return st.secrets[key]
+    except Exception:
+        pass
+
+    # 3. Fail fast (important)
+    raise ValueError(f"Missing required environment variable: {key}")
+
+
 def get_llm() -> ChatOpenAI:
+    """
+    Returns configured ChatOpenAI client.
+    Works both locally and on Streamlit Cloud.
+    """
+
     return ChatOpenAI(
-        model=os.environ["LLM_MODEL"],
-        api_key=os.environ["LLM_API_KEY"],
-        base_url=os.getenv("LLM_BASE_URL") or None,
+        model=_get_env("LLM_MODEL"),
+        api_key=_get_env("LLM_API_KEY"),
+        base_url=_get_env("LLM_BASE_URL"),
         temperature=0,
         streaming=False,
     )

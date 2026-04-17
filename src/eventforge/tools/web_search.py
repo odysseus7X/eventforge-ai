@@ -2,8 +2,9 @@ from langchain_core.tools import tool
 from tavily import TavilyClient
 import os
 import asyncio
+from eventforge.utils.llm_client import _get_env
 
-client = TavilyClient(api_key=os.environ["TAVILY_API_KEY"])
+client = TavilyClient(api_key=_get_env("TAVILY_API_KEY"))
 
 
 def _clean_results(results):
